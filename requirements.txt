@@ -4,7 +4,7 @@ Flask-Login==0.6.2
 Flask-SQLAlchemy==3.1.1
 Werkzeug==2.3.7  # Specific version that has url_decode
 pandas==2.0.3
-numpy==2.0.0
+numpy==1.24.4
 scikit-learn==1.6.1
 joblib==1.3.2
 Flask-Limiter==3.5.0
