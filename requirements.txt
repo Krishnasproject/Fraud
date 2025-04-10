@@ -9,10 +9,10 @@ requests==2.31.0
 SQLAlchemy==2.0.20
 
 # Data science stack
-numpy==1.24.4
 pandas==2.0.3
-scikit-learn==1.6.1
-joblib==1.3.2
+numpy==1.23.5
+scikit-learn==1.1.3
+joblib==1.2.0
 
 # Build requirements
 setuptools==68.0.0
@@ -20,3 +20,4 @@ wheel==0.41.2
 cython==0.29.36
 Flask-Limiter==3.5.0
 Flask-Mail==0.9.1
+
