@@ -25,9 +25,11 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
+if not app.secret_key:
+    raise ValueError("No SECRET_KEY set for Flask application")
 
-# Configure Flask-Mail
-app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+# Database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///fraud_detection.db'
 app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
 app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True').lower() in ('true', '1', 't')
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
@@ -42,8 +44,13 @@ login_manager.init_app(app)
 login_manager.login_view = 'register'
 limiter = Limiter(get_remote_address, app=app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fraud_detection.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_size': 5,
+    'max_overflow': 2,
+    'pool_timeout': 30,
+    'pool_recycle': 1800
+}
 db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
@@ -313,4 +320,4 @@ def method_not_allowed(e):
     return jsonify({'error': 'Method not allowed'}), 405
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
