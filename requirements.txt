@@ -20,4 +20,4 @@ wheel==0.41.2
 cython==0.29.36
 Flask-Limiter==3.5.0
 Flask-Mail==0.9.1
-
+redis == 4.5.5
