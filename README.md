@@ -1,4 +1,5 @@
 Fraud Detection System using Machine Learning
+
 📌 Overview
 
 This project is a Machine Learning–based Fraud Detection System built to identify potentially fraudulent financial transactions.
@@ -100,5 +101,6 @@ Add explainability using SHAP or LIME
 
 🙌 Author
 
-Krishna Jha
+Krishnanand Jha
 Aspiring Data Scientist | Machine Learning Enthusiast
+
