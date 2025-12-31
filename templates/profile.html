@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Profile - Fraud Detection System{% endblock %}
+{% block content %}
+<div class="container">
+    <nav>
+        <div>
+            <a href="{{ url_for('predict') }}">Predict</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+        </div>
+        <div>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+    <h1>User Profile</h1>
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" value="{{ user.username }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" value="{{ user.email }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>WhatsApp Number</label>
+        <input type="text" value="{{ user.whatsapp_number or 'Not provided' }}" disabled>
+    </div>
+    <div class="link">
+        <a href="{{ url_for('predict') }}">Go to Predictions</a>
+    </div>
+</div>
+{% endblock %}
+
