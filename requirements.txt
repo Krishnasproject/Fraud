@@ -10,11 +10,10 @@ SQLAlchemy==2.0.20
 psycopg2-binary==2.9.9
 
 # Data science stack
-# Using numpy 2.0.2 as pickle files were created with numpy 2.x (requires numpy._core)
-# Note: pandas 2.2.x requires numpy<2, so we'll let pip find compatible versions
-# If this fails, pickle files need to be regenerated with numpy 1.x
-numpy==2.0.2
-pandas
+# Using numpy 1.26.4 (compatible with pandas 2.2.x)
+# Pickle files were created with numpy 2.x, so they won't load, but code will retrain models automatically
+pandas==2.2.1
+numpy==1.26.4
 scikit-learn==1.5.0
 joblib==1.3.2
 
