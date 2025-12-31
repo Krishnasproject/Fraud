@@ -185,9 +185,8 @@ def profile():
     return render_template('profile.html', user=current_user)
 
 @app.route('/')
-
 def index():
-    return redirect(url_for('register'))
+    return render_template('index.html')
 
 def send_whatsapp_notification(data, reasons):
     whatsapp_number = data.get('whatsapp_number')

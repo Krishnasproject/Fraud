@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Welcome - Fraud Detection System{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Welcome to the Fraud Detection System!</h1>
+    <p>This system uses machine learning to identify potentially fraudulent financial transactions.</p>
+    <p>Please register or log in to use the prediction features.</p>
+    <div class="link">
+        <a href="{{ url_for('register') }}">Register</a>
+        <span style="margin: 0 10px;">|</span>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</div>
+{% endblock %}
+
