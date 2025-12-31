@@ -74,10 +74,13 @@ class User(UserMixin, db.Model):
 with app.app_context():
     db.create_all()
 
+# Try to load pre-trained models
+models_loaded = False
 try:
     rf_model = joblib.load('rf_model.pkl')
     anomaly_model = joblib.load('anomaly_model.pkl')
     scaler = joblib.load('scaler.pkl')
+    models_loaded = True
     logging.info("Loaded pre-trained models.")
 except Exception as e:
     logging.error(f"Error loading models: {str(e)}")
@@ -112,9 +115,8 @@ df['DeviationFromAvg'] = abs(df['TransactionAmount'] - df['AvgTransactionAmount'
 df['Overdraft'] = (df['TransactionAmount'] > df['AccountBalance']).astype(int)
 df['TransactionType'] = df['TransactionType'].map({'Transfer': 0, 'Withdrawal': 1, 'Deposit': 2})
 
-if os.path.exists('scaler.pkl'):
-    scaler = joblib.load('scaler.pkl')
-else:
+# Fit scaler if models weren't loaded
+if not models_loaded:
     scaler.fit(df[['TransactionAmount', 'AccountBalance', 'AvgTransactionAmount', 'DeviationFromAvg']])
     joblib.dump(scaler, 'scaler.pkl')
 
