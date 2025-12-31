@@ -44,7 +44,7 @@ The best-performing model was selected based on evaluation metrics such as accur
 The dataset contains anonymized transaction data with relevant numerical features used for fraud classification.
 
 ⚠️ Note:
-Dataset and trained model files are not included in the repository to keep the repo lightweight and to avoid sharing large or sensitive files.
+Dataset and trained model files are included in the repository as they are required for deployment. The models are pre-trained and ready to use.
 
 🛠 Tech Stack
 
