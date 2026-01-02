@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Login - Fraud Detection System{% endblock %}
 {% block content %}
+<nav>
+    <div class="container">
+        <div>
+            <a href="{{ url_for('index') }}">Fraud Detection System</a>
+        </div>
+        <div>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <h1>Login</h1>
     <form method="POST" action="{{ url_for('login') }}">

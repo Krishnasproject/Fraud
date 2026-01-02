@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Profile - Fraud Detection System{% endblock %}
 {% block content %}
-<div class="container">
-    <nav>
+<nav>
+    <div class="container">
         <div>
             <a href="{{ url_for('predict') }}">Predict</a>
             <a href="{{ url_for('profile') }}">Profile</a>
@@ -10,7 +10,9 @@
         <div>
             <a href="{{ url_for('logout') }}">Logout</a>
         </div>
-    </nav>
+    </div>
+</nav>
+<div class="container">
     <h1>User Profile</h1>
     <div class="form-group">
         <label>Username</label>
