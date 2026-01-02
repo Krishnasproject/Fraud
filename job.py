@@ -44,6 +44,12 @@ mail.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'register'
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    if request.is_json or request.content_type == 'application/json':
+        return jsonify({'error': 'Unauthorized'}), 401
+    return redirect(url_for('login'))
 # Use in-memory storage for Flask-Limiter (works without Redis)
 limiter = Limiter(
     key_func=get_remote_address,

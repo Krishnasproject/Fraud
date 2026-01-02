@@ -118,25 +118,46 @@
                 },
                 body: JSON.stringify(data)
             });
-            
-            const result = await response.json();
+
             loadingDiv.style.display = 'none';
-            
+
             if (response.ok) {
-                resultDiv.className = result.Fraudulent === 'Yes' ? 'fraud' : 'safe';
-                resultDiv.innerHTML = `
-                    <h3>Prediction Result: ${result.Fraudulent === 'Yes' ? '⚠️ FRAUDULENT' : '✓ SAFE'}</h3>
-                    <p><strong>Anomaly Score:</strong> ${result.AnomalyScore}</p>
-                    <h4>Reasons:</h4>
-                    <ul>
-                        ${result.Reasons.map(reason => `<li>${reason}</li>`).join('')}
-                    </ul>
-                `;
-                resultDiv.style.display = 'block';
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const result = await response.json();
+                    resultDiv.className = result.Fraudulent === 'Yes' ? 'fraud' : 'safe';
+                    resultDiv.innerHTML = `
+                        <h3>Prediction Result: ${result.Fraudulent === 'Yes' ? '⚠️ FRAUDULENT' : '✓ SAFE'}</h3>
+                        <p><strong>Anomaly Score:</strong> ${result.AnomalyScore}</p>
+                        <h4>Reasons:</h4>
+                        <ul>
+                            ${result.Reasons.map(reason => `<li>${reason}</li>`).join('')}
+                        </ul>
+                    `;
+                    resultDiv.style.display = 'block';
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `<h3>Error</h3><p>Unexpected response format</p>`;
+                    resultDiv.style.display = 'block';
+                }
             } else {
-                resultDiv.className = 'error';
-                resultDiv.innerHTML = `<h3>Error</h3><p>${result.error || 'An error occurred'}</p>`;
-                resultDiv.style.display = 'block';
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const result = await response.json();
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `<h3>Error</h3><p>${result.error || 'An error occurred'}</p>`;
+                    resultDiv.style.display = 'block';
+                } else {
+                    if (response.status === 401) {
+                        resultDiv.className = 'error';
+                        resultDiv.innerHTML = `<h3>Unauthorized</h3><p>Please log in again.</p>`;
+                        resultDiv.style.display = 'block';
+                    } else {
+                        resultDiv.className = 'error';
+                        resultDiv.innerHTML = `<h3>Error</h3><p>Server error: ${response.status}</p>`;
+                        resultDiv.style.display = 'block';
+                    }
+                }
             }
         } catch (error) {
             loadingDiv.style.display = 'none';
